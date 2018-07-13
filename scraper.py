@@ -36,19 +36,6 @@ def pageScraper(url):
     
     return nextUrl
 
-def stripTags():
-    raw = open(rawFileName, 'r')
-    clean = open(cleanFileName, 'w')
-
-    questions = raw.read().splitlines()
-
-    for q in questions:
-        date =
-        question =
-        answer =
-
-
-
 nextUrl = pageScraper(homeUrl)
 
 while nextUrl:
