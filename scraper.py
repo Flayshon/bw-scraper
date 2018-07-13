@@ -4,6 +4,8 @@ import re
 import regex
 
 homeUrl = 'http://www.billwurtz.com/questions/questions.html'
+rawFileName = 'recent-questions-raw.txt'
+cleanFileName = 'recent-questions.txt'
 
 def pageScraper(url):
     resp = urllib.request.urlopen(url)
@@ -11,7 +13,7 @@ def pageScraper(url):
     questions = re.findall(r'<h3>(.*?)</br></br>', str(respData))
 
     #The file used to store the raw HTML entries. This has to go through another function to strip all remaining tags
-    out = open('recent-questions-raw.txt', 'a')
+    out = open(rawFileName, 'a')
 
     for q in questions:
         out.write(q + '\n\n')
@@ -33,6 +35,19 @@ def pageScraper(url):
     out.close()
     
     return nextUrl
+
+def stripTags():
+    raw = open(rawFileName, 'r')
+    clean = open(cleanFileName, 'w')
+
+    questions = raw.read().splitlines()
+
+    for q in questions:
+        date =
+        question =
+        answer =
+
+
 
 nextUrl = pageScraper(homeUrl)
 
