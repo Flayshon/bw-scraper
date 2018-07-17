@@ -16,6 +16,7 @@ def pageScraper(url):
     out = open(rawFileName, 'a')
 
     for q in questions:
+        q = stripTags(q)
         out.write(q + '\n\n')
 
     #Last entry always falls in a different pattern, so parsing right-to-left is faster.
@@ -35,6 +36,9 @@ def pageScraper(url):
     out.close()
     
     return nextUrl
+
+def stripTags(question):
+    out = open(cleanFileName, 'a')
 
 nextUrl = pageScraper(homeUrl)
 
