@@ -17,13 +17,10 @@ def pageScraper(url):
 
     for q in questions:
         date, question = q.split('</dco>')
-        #print(date)
         date, time = date.split('&nbsp; \\n')
         out.write('[' + date + ' - ' + time + ']' + '\n')
         soup = BeautifulSoup(question, "html.parser")
-        print(soup.get_text())
-
-        #qnaList = [item + '\n' for item in qnaList]
+        
         question = question.split('<\qco>')
         for sub in question:
             sub = sub.strip('<qco>')
@@ -32,13 +29,15 @@ def pageScraper(url):
 
     #Last entry always falls in a different pattern, so parsing right-to-left is faster.
     lastQ = regex.findall(r'(?r)<h3> <dco>(.*?)<A NAME="bottom">', str(respData))
-    date, lastQuestion = lastQ[0].split('</dco>')
-    date, time = date.split('&nbsp; \\n')
-    out.write('[' + date + ' - ' + time + ']' + '\n')
-    question = question.split('<\qco>')
-    for sub in question:
-        soup = BeautifulSoup(sub, "html.parser")
-        out.write(soup.get_text() + '\n\n')
+    
+    for lq in lastQ:
+        date, lastQuestion = lq.split('</dco>')
+        date, time = date.split('&nbsp; \\n')
+        out.write('[' + date + ' - ' + time + ']' + '\n')
+        question = lq.split('<\qco>')
+        for sub in question:
+            soup = BeautifulSoup(sub, "html.parser")
+            out.write(soup.get_text() + '\n\n')
 
     nextUrlData = regex.findall(r'(?r)<a href="questions-20(.*?).html">', str(respData))
     
@@ -55,7 +54,6 @@ def pageScraper(url):
     return nextUrl
 
 nextUrl = pageScraper(homeUrl)
-'''
+
 while nextUrl:
     nextUrl = pageScraper(nextUrl)
-'''
