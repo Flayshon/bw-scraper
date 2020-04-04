@@ -17,7 +17,7 @@ def pageScraper(url):
 
     for q in questions:
         date, question = q.split('</dco>')
-        date, time = date.split('&nbsp; \\n')
+        date, time = re.split(r'&nbsp;\s?\\n', date)
         out.write('[' + date + ' - ' + time + ']' + '\n')
         soup = BeautifulSoup(question, "html.parser")
         
@@ -32,7 +32,7 @@ def pageScraper(url):
     
     for lq in lastQ:
         date, lastQuestion = lq.split('</dco>')
-        date, time = date.split('&nbsp; \\n')
+        date, time = re.split(r'&nbsp;\s?\\n', date)
         out.write('[' + date + ' - ' + time + ']' + '\n')
         question = lq.split('<\qco>')
         for sub in question:
